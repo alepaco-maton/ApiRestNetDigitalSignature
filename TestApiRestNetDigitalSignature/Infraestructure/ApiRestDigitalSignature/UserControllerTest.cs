@@ -1,3 +1,6 @@
+using ApiRestNetDigitalSignature.Application.Port;
+using ApiRestNetDigitalSignature.Infraestructure.ApiRestDigitalSignature;
+using ApiRestNetDigitalSignature.Infraestructure.ApiRestDigitalSignature.Dto;
 using Moq;
 
 namespace TestApiRestNetDigitalSignature.Infraestructure.ApiRestDigitalSignature;
@@ -6,7 +9,7 @@ public class UserControllerTest
 {
 
     private readonly UserController _controller;
-    private readonly Mock<UserService> _service;
+    private readonly Mock<IUserService> _service;
 
     public UserControllerTest()
     {

@@ -1,17 +1,43 @@
 <Project Sdk="Microsoft.NET.Sdk.Worker">
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<UserSecretsId>dotnet-ApiRestNetDigitalSignature-adeb7d0b-347e-4b22-9f82-78152efc9ac2</UserSecretsId>
+	</PropertyGroup>
 
-    <PropertyGroup>
-        <TargetFramework>net8.0</TargetFramework>
-        <Nullable>enable</Nullable>
-        <ImplicitUsings>enable</ImplicitUsings>
-        <UserSecretsId>dotnet-ApiRestNetDigitalSignature-adeb7d0b-347e-4b22-9f82-78152efc9ac2</UserSecretsId>
-    </PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="AutoMapper" Version="13.0.1" />
+		<PackageReference Include="EntityFramework" Version="6.5.1" />
+		<PackageReference Include="FluentAssertions" Version="7.0.0-alpha.4" />
+		<PackageReference Include="log4net" Version="3.0.1-preview.2" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.0-rc.1.24451.1" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.0-rc.1.24451.1"/>
+		<PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="9.0.0-rc.1.24451.1" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.0-rc.1.24451.1" />
+		<PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Log4Net.AspNetCore" Version="8.0.0" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.8.0" />
 
-    <ItemGroup>
-        <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0"/>
-    </ItemGroup>
+	</ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Infraestructure\Persistence\Repository\" />
-    </ItemGroup>
+	<ItemGroup>
+	  <EmbeddedResource Update="Language\strings.resx">
+	    <Generator>ResXFileCodeGenerator</Generator>
+	    <LastGenOutput>strings.Designer.cs</LastGenOutput>
+	  </EmbeddedResource>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Update="Language\strings.Designer.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>strings.resx</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="documentsByUser\" />
+	</ItemGroup>
 </Project>

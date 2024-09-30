@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<root>
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:element name="root" msdata:IsDataSet="true">
+            
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <data name="API_DS-0000" xml:space="preserve">
+        <value>Operación Exitosa.</value>
+    </data>
+    <data name="API_DS-0001" xml:space="preserve">
+        <value>No se pudo procesar su transacción, intentelo mas tarde.</value>
+    </data>
+    <data name="API_DS-0002" xml:space="preserve">
+        <value>Nombre de usuario es requerido.</value>
+    </data>
+    <data name="API_DS-0003" xml:space="preserve">
+        <value>Nombre de usuario es invalido.</value>
+    </data>
+    <data name="API_DS-0004" xml:space="preserve">
+        <value>Nombre del usuario ya esta en uso.</value>
+    </data>
+    <data name="API_DS-0005" xml:space="preserve">
+        <value>Identificador de usuario invalido.</value>
+    </data>
+    <data name="API_DS-0006" xml:space="preserve">
+        <value>Identificador de usuario invalido.</value>
+    </data>
+    <data name="API_DS-0007" xml:space="preserve">
+        <value>Problemas al cargar el certificado del usuario.</value>
+    </data>
+    <data name="API_DS-0008" xml:space="preserve">
+        <value>Identificador de documento invalido.</value>
+    </data>
+    <data name="API_DS-0009" xml:space="preserve">
+        <value>No se encontro el documento digital.</value>
+    </data>
+    <data name="API_DS-0010" xml:space="preserve">
+        <value>Identificador de documento invalido.</value>
+    </data>
+</root>
