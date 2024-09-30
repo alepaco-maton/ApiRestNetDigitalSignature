@@ -6,7 +6,7 @@ using ApiRestNetDigitalSignature.Dominio.Port;
 
 namespace ApiRestNetDigitalSignature.Application.Service.User.Validator;
 
-public class CreateDsUserValidator
+public class CreateDsUserValidator : IValidator<DsUser>
 {
     private IDsUserRepository _repository;
 
@@ -15,7 +15,7 @@ public class CreateDsUserValidator
         _repository = repository;
     }
 
-    public string validate(DsUser dsUser)
+    public string Validate(DsUser dsUser)
     {
         List<IValidator<DsUser>> validators = new List<IValidator<DsUser>>();
         validators.Add(new DsUserUserNameValidator(_repository));

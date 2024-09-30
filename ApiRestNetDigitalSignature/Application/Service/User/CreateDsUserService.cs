@@ -1,4 +1,4 @@
-using ApiRestNetDigitalSignature.Application.Service.Cypher;
+using ApiRestNetDigitalSignature.Application.Port;
 using ApiRestNetDigitalSignature.Application.Service.User.Validator;
 using ApiRestNetDigitalSignature.Dominio.Common;
 using ApiRestNetDigitalSignature.Dominio.Model;
@@ -6,31 +6,31 @@ using ApiRestNetDigitalSignature.Dominio.Port;
 
 namespace ApiRestNetDigitalSignature.Application.Service;
 
-public class CreateDsUserService
+public class CreateDsUserService : ICreateDsUserService
 {
     private IAppLogger _logger;
     private IMultiLanguageMessagesService _mlms;
 
     private readonly IUnitOfWork _unitOfWork;
 
-    private CreateDsUserValidator validator;
+    private IValidator<DsUser> validator;
 
-    private CreateCertAndPairKeyUseCase createCertAndPairKeyUseCase;
+    private ICreateCertAndPairKeyUseCase createCertAndPairKeyUseCase;
 
     public CreateDsUserService(IAppLogger log, IMultiLanguageMessagesService messagesService,
-    IUnitOfWork unitOfWork, CreateDsUserValidator createValidator,
-    CreateCertAndPairKeyUseCase certAndPairKeyUseCase)
+    IUnitOfWork unitOfWork,
+    ICreateCertAndPairKeyUseCase certAndPairKeyUseCase)
     {
         _logger = log;
         _mlms = messagesService;
         _unitOfWork = unitOfWork;
-        validator = createValidator;
+        validator = new CreateDsUserValidator(_unitOfWork.DsUserRepository);
         createCertAndPairKeyUseCase = certAndPairKeyUseCase;
     }
 
     public async Task<DsUser> Create(DsUser model, string pathFolderByUser)
     {
-        string errorCode = validator.validate(model);
+        string errorCode = validator.Validate(model);
 
         if (!AppTools.IsSuccessfulErrorCode(errorCode))
         {

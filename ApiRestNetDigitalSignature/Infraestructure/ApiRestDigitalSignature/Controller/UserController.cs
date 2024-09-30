@@ -1,6 +1,6 @@
+using ApiRestNetDigitalSignature.Application.Port;
 using ApiRestNetDigitalSignature.Application.Service;
 using ApiRestNetDigitalSignature.Dominio.Model;
-using ApiRestNetDigitalSignature.Dominio.Port;
 using ApiRestNetDigitalSignature.Infraestructure.ApiRestDigitalSignature.Dto.User;
 using ApiRestNetDigitalSignature.Infraestructure.ApiRestDigitalSignature.Exceptions;
 using Microsoft.AspNetCore.Http;
@@ -14,37 +14,13 @@ namespace ApiRestNetDigitalSignature.Infraestructure.ApiRestDigitalSignature.Con
 public class UserController : ControllerBase
 {
     private readonly IConfiguration _configuration;
-    private readonly IAppLogger _logger;
-    private readonly IMultiLanguageMessagesService _messagesService;
-    private readonly IDsUserRepository _repository;
-    //private readonly IDocumentRepository _documentRepository;
+    private ICreateDsUserService _createUserService;
 
-    private CreateDsUserService _createUserService;
-    /* private ReadUserUseCase _readUserUseCase;
-     private UpdateUserUseCase _updateUserUseCase;
-     private DeleteUserUseCase _deleteUserUseCase;
- */
-    public UserController(IConfiguration configuration, IAppLogger logger,
-                         IMultiLanguageMessagesService messagesService,
-                         IDsUserRepository dsUserRepository,
-                         CreateDsUserService createUserService
-                             /*,
-                              IDocumentRepository documentRepository*/)
+    public UserController(IConfiguration configuration, ICreateDsUserService createUserService)
     {
         _configuration = configuration;
-        _logger = logger;
-        _messagesService = messagesService;
-        _repository = dsUserRepository;
         _createUserService = createUserService;
-        //_documentRepository = documentRepository; 
-
-        /*_readUserUseCase = new ReadUserUseCase(_userRepository);
-        _updateUserUseCase = new UpdateUserUseCase(_messagesService, _userRepository, new UpdateUserValidator(_userRepository));
-        _deleteUserUseCase = new DeleteUserUseCase(_messagesService, _userRepository, new DeleteUserValidator(_userRepository), _documentRepository);
-        */
-
     }
-
 
     [HttpPost]
     [ProducesResponseType(typeof(CreateUserResponse), StatusCodes.Status201Created)]
@@ -54,8 +30,8 @@ public class UserController : ControllerBase
     {
         var user = new DsUser(request.UserName);
         user = await _createUserService.Create(user,
-            _configuration.GetValue<string>("pathFolderByUser")
-            );
+        _configuration["pathFolderByUser"]
+        );
         var response = new CreateUserResponse(user.Id, user.UserName);
         return Created($"/{response.Id}", response);
 

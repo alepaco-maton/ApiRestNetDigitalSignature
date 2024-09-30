@@ -741,3 +741,6 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
+
+# Directories de documentos de los usuarios
+./documentsByUser/*

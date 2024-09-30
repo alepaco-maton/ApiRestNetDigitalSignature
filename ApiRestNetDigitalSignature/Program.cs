@@ -1,6 +1,7 @@
 using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using ApiRestNetDigitalSignature.Application.Port;
 using ApiRestNetDigitalSignature.Application.Service;
 using ApiRestNetDigitalSignature.Application.Service.Cypher;
 using ApiRestNetDigitalSignature.Application.Service.User.Validator;
@@ -29,9 +30,8 @@ builder.Services.AddScoped<IMultiLanguageMessagesService, MultiLanguageMessagesS
 
 builder.Services.AddScoped<IDsUserRepository, DsUserRepository>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-builder.Services.AddScoped<CreateDsUserService>();
-builder.Services.AddScoped<CreateDsUserValidator>();
-builder.Services.AddScoped<CreateCertAndPairKeyUseCase>();
+builder.Services.AddScoped<ICreateCertAndPairKeyUseCase, CreateCertAndPairKeyUseCase>();
+builder.Services.AddScoped<ICreateDsUserService, CreateDsUserService>();
 
 var logRepository = LogManager.GetRepository(Assembly.GetEntryAssembly());
 XmlConfigurator.Configure(logRepository, new FileInfo("log4net.config"));

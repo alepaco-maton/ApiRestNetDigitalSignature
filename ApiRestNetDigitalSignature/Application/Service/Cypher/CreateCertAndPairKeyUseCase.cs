@@ -8,10 +8,11 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using Microsoft.Extensions.Logging;
 using ApiRestNetDigitalSignature.Dominio.Common;
+using ApiRestNetDigitalSignature.Application.Port;
 
 namespace ApiRestNetDigitalSignature.Application.Service.Cypher;
 
-public class CreateCertAndPairKeyUseCase
+public class CreateCertAndPairKeyUseCase : ICreateCertAndPairKeyUseCase
 {
     private const int PairKeySize = 2048;
     private const string PairKeyAlgorithm = "RSA";

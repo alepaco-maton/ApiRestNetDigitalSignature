@@ -1,6 +1,10 @@
 using ApiRestNetDigitalSignature.Application.Port;
-using ApiRestNetDigitalSignature.Infraestructure.ApiRestDigitalSignature;
-using ApiRestNetDigitalSignature.Infraestructure.ApiRestDigitalSignature.Dto;
+using ApiRestNetDigitalSignature.Dominio.Model;
+using ApiRestNetDigitalSignature.Dominio.Port;
+using ApiRestNetDigitalSignature.Infraestructure.ApiRestDigitalSignature.Controller;
+using ApiRestNetDigitalSignature.Infraestructure.ApiRestDigitalSignature.Dto.User;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Moq;
 
 namespace TestApiRestNetDigitalSignature.Infraestructure.ApiRestDigitalSignature;
@@ -8,31 +12,38 @@ namespace TestApiRestNetDigitalSignature.Infraestructure.ApiRestDigitalSignature
 public class UserControllerTest
 {
 
+    private readonly Mock<IConfiguration> _configuration;
+    private readonly Mock<ICreateDsUserService> _service;
     private readonly UserController _controller;
-    private readonly Mock<IUserService> _service;
 
     public UserControllerTest()
     {
-        _service = new Mock<IUserService>();
-        _controller = new UserController(_service.Object);
+        _configuration = new Mock<IConfiguration>();
+        _service = new Mock<ICreateDsUserService>();
+        _controller = new UserController(_configuration.Object, _service.Object);
     }
 
     [Fact]
-    public void createSuccessful()
+    public async Task createSuccessful()
     {
-        CreateUserRequest dto = new CreateUserRequest();
-        dto.setUserName("alepaco.maton");
-        DsUser user = new DsUser(); 
-       
-        _service.Setup(s => s.create(dto)).ReturnsAsync(user);
+        // Arrange
+        const string userNameTest = "testuser";
+        var request = new CreateUserRequest(userNameTest);
+        var createdUser = new DsUser(request.UserName) { Id = 1 };
 
-        var result = await _controller.create(dto);
+        _configuration.Setup(config => config["pathFolderByUser"]).Returns("some/folder/path");
 
-        
-        var createdResult = Assert.IsType<CreateUserResponse>(result);
-        var returnedUser = Assert.IsAssignableFrom<DsUser>(createdResult.Value);
-        Assert.Equal(user, returnedUser);
-     
+        _service.Setup(service => service.Create(It.IsAny<DsUser>(), _configuration.Object["pathFolderByUser"]))
+            .ReturnsAsync(createdUser);
+
+        // Act
+        var result = await _controller.Create(request);
+
+        // Assert
+        var createdResult = Assert.IsType<CreatedResult>(result);
+        Assert.NotNull(((CreateUserResponse)createdResult.Value).Id); // Verify user ID in response
+        Assert.Equal(userNameTest, ((CreateUserResponse)createdResult.Value).UserName); // Verify username in response
+
     }
 
 }
